@@ -1,17 +1,31 @@
 <template>
   <div class="flex h-screen bg-gray-50 dark:bg-gray-900">
-    <router-view />
+    <router-view v-if="allDataLoaded" />
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   async created() {
-    this.$store.dispatch('loadArticles')
-    this.$store.dispatch('loadCollections')
-    this.$store.dispatch('loadEntries')
-    this.$store.dispatch('loadTemplates')
-    this.$store.dispatch('loadSources')
+    this.loadAllData()
+    setInterval(() => {
+      this.loadAllData()
+      console.log("automatic fetch and data load")
+    }, 300000);
+    //this.updateAllDataLoaded(true)
+  },
+  computed: {
+    ...mapGetters([
+      'allDataLoaded',
+    ]),
+  },
+  methods: {
+    ...mapActions([
+      'updateAllDataLoaded',
+      'loadAllData',
+    ]),
   }
 };
 </script>

@@ -43,6 +43,7 @@ export default {
         const response = await axios.delete(`api/entries/${item._id}`)
         return response.data
     },
+    
 
 
     async getAllSources(){
@@ -50,7 +51,15 @@ export default {
         return response.data
     },
     async addSource(data) {
-        const response = await axios.post("api/sources/", data)
+        const response = await axios.post("api/sources/", {rss_url: data})
+        return response.data
+    },
+    async updateSource(item, data){
+        const response = await axios.put(`api/sources/${item._id}`, data)
+        return response.data
+    },
+    async deleteSource(item){
+        const response = await axios.delete(`api/sources/${item._id}`)
         return response.data
     },
     async updateSourceActive(item, bool){

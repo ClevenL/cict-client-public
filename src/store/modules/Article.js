@@ -6,17 +6,13 @@ const state = {
     type: 'all',
     search: '',
     selectedSources: [],
-    //category: null,
 
 }
 
 const filters = {
-    //search: (articles, search) => articles.filter(article => article.articles.title.match(search)),
     unread: articles => articles.filter(article => !article.read && !article.hide),
     read: articles => articles.filter(article => article.read && !article.hide),
     starred: articles => articles.filter(article => article.star && !article.hide),
-    //source: (articles, source) => articles.filter(article => article.sources._id === source._id),
-    //category: (articles, category) => articles.filter(article => article.articles.category === category),
     saved: articles => articles.filter(article => article.save && !article.hide),
     all: articles => articles.filter(article => !article.hide)
 }
@@ -46,26 +42,6 @@ const getters = {
             return filters[state.type](fuse.search(state.search).map(article => article.item)).filter(article => state.selectedSources.some(title => title == article.sources.title))
         }
         return filters[state.type](state.articles)
-
-        /*
-        const sortPref = rootState.Setting.oldestArticles === 'off' ? 'desc' : 'asc'
-        const orderedArticles = state.articles.concat().sort(sortBy('publishUnix', sortPref))
-        if (state.type !== 'feed' && state.type !== 'search') {
-          return filters[state.type](orderedArticles)
-        }
-        if (state.type === 'search') {
-          const searchIndex = Fuse.createIndex(searchOption.keys, state.articles)
-          const fuse = new Fuse(state.articles, searchOption, searchIndex)
-          if (state.search !== '') {
-            return fuse.search(state.search).map(article => article.item)
-          }
-          return filters.all(orderedArticles)
-        }
-        if (state.category) {
-          return filters.category(orderedArticles, state.category)
-        }
-        return filters[state.type](orderedArticles, state.feed)
-        */
     },
     unHiddenArticles: (state) => {
         return state.articles.filter(article => !article.hide)

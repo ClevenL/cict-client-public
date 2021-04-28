@@ -106,10 +106,10 @@
         class="max-w-3xl px-8 py-4 mx-auto my-2 bg-white shadow-md dark:bg-gray-800"
         >
           <div class="mt-2">
-            <h2 class="text-2xl font-bold text-gray-700 dark:text-white">{{ modalItem.title }}</h2>
-            <p class="mt-2 text-gray-600 dark:text-gray-300">{{ modalItem.date }}</p>
+            <h2 class="text-2xl font-bold text-gray-700">{{ modalItem.title }}</h2>
+            <p class="mt-2 text-gray-600">{{ modalItem.date }}</p>
             <img v-if="articleContentLoader" src="../assets/buratino.png" class="block animate-spin h-20 w-20" style="margin-right:auto; margin-left:auto;"/>
-            <p class="modal-content mt-2 text-gray-600 dark:text-gray-300" v-html="modalItem.content"></p>
+            <p class="modal-content mt-2 text-gray-600" v-html="modalItem.content"></p>
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@ export default {
     getFeedDate(item){
       const ms = Date.now() - new Date(item.date)
       const hours = Math.floor(ms/3600000)
-      const minutes = Math.floor(ms/60000)
+      const minutes = Math.floor(ms/60000)    
       if(minutes < 1) return `now`
       if(minutes < 60) return `${minutes}min`
       return hours < 24 ? `${hours}h` : `${Math.floor(hours/24)}d`
