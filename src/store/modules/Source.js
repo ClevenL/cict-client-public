@@ -2,7 +2,7 @@ import api from '../../api'
 
 const state = {
     sources: [],
-    sourceAddingError: false
+    sourceAddingError: "",
 }
 
 const getters = {
@@ -22,10 +22,14 @@ const actions = {
     async loadSources ({ commit }) {
         commit('LOAD_SOURCES', await api.getAllSources())
     },
-    async addSource ({commit}, data) {
-        commit('UPDATE_SOURCE_ADDING_ERROR', false)
+    async addSource ({commit, dispatch}, data) {
+        commit('UPDATE_SOURCE_ADDING_ERROR', "")
         const response = await api.addSource(data)
-        response.title ? commit('ADD_SOURCE', response) : commit('UPDATE_SOURCE_ADDING_ERROR', true)
+        if (response.message) commit('UPDATE_SOURCE_ADDING_ERROR', response.message)
+        if (response.title) {
+            commit('ADD_SOURCE', response)
+            dispatch('loadAllData', { root: true })
+        }
     },
     async makeSourceActive ({ commit }, data) {
         commit('UPDATE_SOURCE', await api.updateSourceActive(data, true))

@@ -52,6 +52,7 @@ export default {
     },
     async addSource(data) {
         const response = await axios.post("api/sources/", {rss_url: data})
+        console.log(response)
         return response.data
     },
     async updateSource(item, data){

@@ -3,7 +3,7 @@
       <input v-model="newSourceURL" type="text" placeholder="RSS feed URL" class="px-3 py-3 placeholder-gray-300 text-gray-600 relative bg-white text-xl border rounded-l-md border-gray-100 outline-none focus:outline-none focus: w-full"/>
       <button @click="addSourceData" class="px-8 rounded-r-md bg-gray-200 transition-colors duration-150 text-gray-500 hover:text-gray-800 hover:bg-green-200 font-semibold p-4">Add</button>
     </div>
-    <div v-if="sourceAddingError">Feed error</div>
+    <div v-if="sourceAddingError.length">{{ sourceAddingError }}</div>
     <div class="container flex flex-col mx-auto w-full items-center justify-center">
       <ul class="flex flex-col w-full">
         <li 
