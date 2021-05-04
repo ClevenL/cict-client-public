@@ -1,4 +1,5 @@
 import api from '../../api/'
+import utils from '../../utils.js'
 import Fuse from 'fuse.js'
 
 const state = {
@@ -6,6 +7,9 @@ const state = {
     type: 'all',
     search: '',
     selectedSources: [],
+    modalItem: {},
+    articleModal: false,
+    articleContentLoader: false,
 
 }
 
@@ -43,6 +47,15 @@ const getters = {
         }
         return filters[state.type](state.articles)
     },
+    articleModal: (state) => {
+        return state.articleModal
+    },
+    modalItem: (state) => {
+        return state.modalItem
+    },
+    articleContentLoader: (state) => {
+        return state.articleContentLoader
+    },
     unHiddenArticles: (state) => {
         return state.articles.filter(article => !article.hide)
     },
@@ -76,6 +89,11 @@ const actions = {
     async updateSaved ({ commit }, data) {
         commit('UPDATE_ARTICLE_DATA', await api.updateArticleSave(data))
     },
+    async setArticleModal({commit, dispatch}, data){
+        commit('SET_ARTICLE_MODAL', data)
+        dispatch('makeRead', data)
+        commit('UPDATE_MODAL_ITEM_CONTENT', await api.getArticleContent(encodeURIComponent(utils.prettyURL(data))))
+    },
     updateType ({ commit }, data) {
         commit('UPDATE_TYPE', data)
     },
@@ -84,6 +102,9 @@ const actions = {
     },
     selectSource ({ commit }, data) {
         commit('SELECT_SOURCE', data)
+    },
+    closeArticleModal ({ commit }) {
+        commit('CLOSE_ARTICLE_MODAL')
     },
 }
 
@@ -97,6 +118,20 @@ const mutations = {
     },
     UPDATE_TYPE (state, data) {
         state.type = data
+    },
+    SET_ARTICLE_MODAL (state, data) {
+        state.articleModal = true
+        state.articleContentLoader = true
+        Object.assign(state.modalItem, data)
+        state.modalItem.date = new Date(data.date).toLocaleDateString()
+    },
+    UPDATE_MODAL_ITEM_CONTENT (state, data) {
+        state.modalItem.content = data
+        state.articleContentLoader = false
+    },
+    CLOSE_ARTICLE_MODAL (state) {
+        state.articleModal = false
+        state.modalItem = {}
     },
     UPDATE_SEARCH (state, data) {
         state.search = data
