@@ -10,22 +10,18 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   async created() {
     this.loadAllData()
+    /*
     setInterval(() => {
       this.loadAllData()
       console.log("automatic fetch and data load")
     }, 300000);
-    //this.updateAllDataLoaded(true)
+    */
   },
   computed: {
-    ...mapGetters([
-      'allDataLoaded',
-    ]),
+    ...mapGetters(['allDataLoaded']),
   },
   methods: {
-    ...mapActions([
-      'updateAllDataLoaded',
-      'loadAllData',
-    ]),
-  }
-};
+    ...mapActions(['updateAllDataLoaded', 'loadAllData']),
+  },
+}
 </script>
