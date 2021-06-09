@@ -206,7 +206,7 @@ export default {
     ]),
     articleCountInSource(source) {
       return this.unReadArticles.filter(
-        (article) => article.sources.title == source.title
+        (article) => article.sources._id == source._id
       ).length
     },
     isSelectedSource(source) {

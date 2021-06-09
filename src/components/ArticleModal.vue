@@ -198,9 +198,7 @@ export default {
       this.closeArticleModal()
     },
     getSourceFaviconURL(item) {
-      return `https://www.google.com/s2/favicons?domain=${utils.prettyURL(
-        item
-      )}`
+      return `/api/favicons/${item.sources.faviconUUID || 'placeholder'}.png`
     },
   },
 }

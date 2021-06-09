@@ -21,7 +21,7 @@ export default {
     ...mapGetters(['allDataLoaded']),
   },
   methods: {
-    ...mapActions(['updateAllDataLoaded', 'loadAllData']),
+    ...mapActions(['loadAllData']),
   },
 }
 </script>
