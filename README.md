@@ -17,10 +17,48 @@ Start development server
 npm run dev
 ```
 
-Build for production
+Build the assets
 
 ```
 npm run build
+```
+
+## Deployment
+
+Ready for production Docker containers are available in Docker Hub.
+
+Run Docker compose in project root
+
+```
+docker-compose up
+```
+
+### Build your own docker images
+
+Clone server-side source
+
+```
+git clone https://github.com/ClevenL/cict-server-public.git
+cd cict-server-public
+```
+
+Build cict-server image
+
+```
+docker build -t cict-server -f Dockerfile.server .
+```
+
+Clone client-side source
+
+```
+git clone https://github.com/ClevenL/cict-client-public.git
+cd cict-client-public
+```
+
+Build cict-client image
+
+```
+docker build -t cict-client -f Dockerfile.client .
 ```
 
 ## Powered by
